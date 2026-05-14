@@ -9,7 +9,7 @@ In-person May project for 1º DAM/DAW.
 ## Planned technologies
 
 - Java web backend
-- Relational database: MariaDB/MySQL preferred
+- Relational database: Amazon RDS for MariaDB/MySQL preferred
 - HTML, CSS and Bootstrap
 - JavaScript/fetch for selected asynchronous actions
 - GitHub Flow/Git Flow with Issues, branches, Pull Requests, tags and Release 1.0
@@ -24,3 +24,7 @@ In-person May project for 1º DAM/DAW.
 ## Setup instructions
 
 Pending. See `docs/project-plan.md` while the project is being initialized.
+
+## Cloud database decision
+
+The main database will be hosted on AWS, preferably using Amazon RDS for MariaDB/MySQL. Local credentials and endpoints must not be committed to the repository.

@@ -6,7 +6,7 @@ Proyecto para las Prácticas Presenciales de Mayo — 1º DAM/DAW.
 
 **Nombre provisional:** F1 Manager Web
 
-Aplicación web en Java para gestionar información de Fórmula 1 usando una base de datos relacional alojada en el servidor de Guillermo y accesible mediante Tailscale.
+Aplicación web en Java para gestionar información de Fórmula 1 usando una base de datos relacional alojada en AWS, preferiblemente mediante Amazon RDS.
 
 La aplicación permitirá consultar, registrar, modificar, eliminar y relacionar datos de pilotos, escuderías, carreras y resultados.
 
@@ -142,7 +142,7 @@ Responsabilidades:
 - Configurar proyecto Java.
 - Crear entidades/modelos.
 - Crear repositorios/DAOs/servicios.
-- Conectar con la base de datos remota por Tailscale.
+- Conectar con la base de datos remota alojada en AWS RDS.
 - Implementar operaciones CRUD.
 
 Ramas posibles:
@@ -373,13 +373,13 @@ El enunciado menciona AWS como extra. Si no da tiempo, priorizar funcionalidad y
 
 Alternativa técnica para demo:
 
-- Servidor propio de Guillermo por Tailscale para base de datos.
-- Aplicación ejecutada localmente para presentación.
+- Amazon RDS como base de datos principal.
+- Aplicación ejecutada localmente o desplegada en AWS para presentación.
 
 Si se quiere aspirar al punto de despliegue:
 
 - Desplegar backend en AWS EC2 o Elastic Beanstalk.
-- Usar una base de datos en AWS RDS o servidor propio accesible de forma segura.
+- Usar una base de datos en AWS RDS.
 
 ## 5. Arquitectura general del proyecto
 
@@ -392,27 +392,30 @@ Browser
 Java Web App
   |
   v
-Database Server via Tailscale
+AWS RDS Database
   |
   v
 MariaDB/MySQL or PostgreSQL
 ```
 
-### 5.2 Servidor
+### 5.2 Servidor / base de datos
 
-Servidor detectado por Tailscale:
+Decisión actualizada: la base de datos principal del proyecto se alojará en **AWS**, preferiblemente con **Amazon RDS**.
 
-```text
-truenas
-100.112.114.10
-```
-
-Servicios disponibles:
+Opción recomendada para el proyecto:
 
 ```text
-MySQL/MariaDB: 3306
-PostgreSQL:    5432
+Amazon RDS for MariaDB/MySQL
 ```
+
+Motivos:
+
+- Encaja mejor con el extra de despliegue/cloud del enunciado.
+- Evita depender de la red doméstica o Tailscale durante la presentación.
+- Permite documentar una arquitectura más profesional.
+- Facilita capturas y explicación de infraestructura en AWS.
+
+Tailscale queda como alternativa de apoyo para desarrollo local o contingencia, pero no como arquitectura principal.
 
 ### 5.3 Base de datos recomendada
 
@@ -425,8 +428,10 @@ MariaDB/MySQL
 URL JDBC prevista:
 
 ```text
-jdbc:mysql://100.112.114.10:3306/f1_manager
+jdbc:mysql://<aws-rds-endpoint>:3306/f1_manager
 ```
+
+El endpoint real se documentará cuando se cree la instancia RDS.
 
 Usuario recomendado:
 
@@ -578,9 +583,9 @@ Issues iniciales sugeridas:
 3. Crear modelo ER.
 4. Crear script `schema.sql`.
 5. Crear script `seed.sql` o importador CSV.
-6. Crear base de datos `f1_manager` en el servidor.
+6. Crear base de datos `f1_manager` en AWS RDS.
 7. Crear usuario específico `f1_app`.
-8. Probar conexión desde Fedora por Tailscale.
+8. Probar conexión desde Fedora contra el endpoint de AWS RDS.
 
 ### Fase 3 — Proyecto Java
 
@@ -693,7 +698,7 @@ Antes de empezar a ejecutar, confirmar:
 3. Integrantes del equipo y usuarios de GitHub.
 4. Stack Java permitido por el profesor: Spring Boot o Servlets/JSP.
 5. Base de datos final: MariaDB/MySQL o PostgreSQL.
-6. Si se intentará despliegue AWS o solo servidor propio + demo local.
+6. Si se desplegará solo la base de datos en AWS RDS o también la aplicación Java en AWS.
 7. Cuántas funcionalidades extra se intentarán implementar.
 
 ## 12. Recomendación de alcance
@@ -735,7 +740,7 @@ Para maximizar nota sin dispersarse:
 5. Crear Issues.
 6. Crear rama `develop`.
 7. Empezar con PR `feature/database-schema`.
-8. Crear base de datos `f1_manager` en el servidor por Tailscale.
+8. Crear base de datos `f1_manager` en AWS RDS.
 9. Crear script SQL inicial.
 10. Crear proyecto Java base.
 
@@ -910,3 +915,60 @@ El mínimo oficial se puede cumplir con 2 entidades, pero el contexto de 1º ind
 - **CRUD parcial o consulta:** races + results.
 - **Extra fuerte:** dashboard SQL + búsqueda + relaciones + Bootstrap + PRs reales.
 - **Si da tiempo:** login básico con roles.
+
+
+## 15. Decisión actualizada: base de datos en AWS
+
+El proyecto pasa a usar **AWS como alojamiento principal de la base de datos**, en lugar del servidor doméstico por Tailscale.
+
+### 15.1 Servicio recomendado
+
+```text
+Amazon RDS for MariaDB/MySQL
+```
+
+MariaDB/MySQL encaja mejor con el contexto de Programación y Bases de Datos de 1º, donde ya aparecen MariaDB, SQL, DDL, DML, joins y modelo relacional.
+
+### 15.2 Arquitectura actualizada
+
+```text
+Developer laptop / IntelliJ
+        |
+        | JDBC over TLS / restricted security group
+        v
+Amazon RDS MariaDB/MySQL
+
+Optional later:
+Browser → Java Web App on AWS EC2/Elastic Beanstalk → Amazon RDS
+```
+
+### 15.3 Seguridad mínima
+
+- Crear una base de datos llamada `f1_manager`.
+- Crear usuario específico `f1_app`.
+- No usar el usuario administrador de RDS en la aplicación.
+- Limitar el Security Group para permitir conexión solo desde IPs necesarias durante desarrollo/presentación.
+- Guardar credenciales fuera del repositorio, por ejemplo en `.env` o `application-local.properties`, ambos ignorados por Git.
+- Documentar variables de entorno necesarias sin publicar contraseñas.
+
+### 15.4 Impacto en el plan
+
+Cambios respecto al plan anterior:
+
+- Tailscale deja de ser requisito para la base de datos.
+- AWS RDS pasa a ser la fuente principal de datos.
+- El README deberá incluir sección `AWS RDS setup`.
+- La presentación podrá explicar arquitectura cloud y justificar la decisión.
+- Si da tiempo, se podrá desplegar también la aplicación Java en AWS para acercarnos más al punto extra de despliegue.
+
+### 15.5 Nuevas tareas GitHub recomendadas
+
+Añadir Issues:
+
+```text
+Configure AWS RDS database
+Create AWS security group for database access
+Document AWS RDS setup in README
+Add environment-based database configuration
+Prepare AWS architecture diagram
+```
