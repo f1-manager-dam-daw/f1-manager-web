@@ -972,3 +972,19 @@ Document AWS RDS setup in README
 Add environment-based database configuration
 Prepare AWS architecture diagram
 ```
+
+## 16. Distribución Guillermo / Héctor
+
+Documento detallado: `DISTRIBUCION_TRABAJO_GUILLERMO_HECTOR.md`.
+
+Resumen:
+
+- **Guillermo:** base de datos, AWS RDS, SQL, importación F1DB, conexión JDBC, configuración y documentación técnica.
+- **Héctor:** frontend, Bootstrap, vistas, formularios, responsive, búsqueda, paginación y JavaScript/fetch.
+- **Compartido:** setup Java, README, presentación, vídeo demo y release final.
+
+Regla principal:
+
+```text
+Nadie fusiona su propia Pull Request sin revisión del otro compañero.
+```
