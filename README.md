@@ -1,30 +1,36 @@
 # F1 Manager Web
 
-Java web application for managing Formula 1 data using a relational database.
+Proyecto Java para gestionar datos de Fórmula 1 con una base de datos relacional.
 
-## Project context
+## Stack previsto
 
-In-person May project for 1º DAM/DAW.
+- Java
+- HTML/CSS
+- Bootstrap
+- MySQL/MariaDB en AWS RDS
 
-## Planned technologies
+## Datos
 
-- Java web backend
-- Relational database: Amazon RDS for MariaDB/MySQL preferred
-- HTML, CSS and Bootstrap
-- JavaScript/fetch for selected asynchronous actions
-- GitHub Flow/Git Flow with Issues, branches, Pull Requests, tags and Release 1.0
+Se usará F1DB como dataset inicial.
 
-## Main entities
+El ZIP SQL está en:
 
-- Drivers
-- Constructors
-- Races
-- Results
+```text
+database/vendor/f1db/f1db-sql-mysql-single-inserts.zip
+```
 
-## Setup instructions
+Vistas auxiliares del proyecto:
 
-Pending. See `docs/project-plan.md` while the project is being initialized.
+```text
+database/f1db_project_views.sql
+```
 
-## Cloud database decision
+## Ramas
 
-The main database will be hosted on AWS, preferably using Amazon RDS for MariaDB/MySQL. Local credentials and endpoints must not be committed to the repository.
+- `main`: versión final estable
+- `develop`: trabajo integrado
+- `feature/*`: funcionalidades
+
+## Ejecución
+
+Pendiente de completar cuando esté creado el proyecto Java.
