@@ -26,9 +26,9 @@ public class DatabaseConnection {
         return properties.getProperty(key, defaultValue);
     }
 
-    private static final String URL = getConfig("db.url", "F1_DB_URL", "jdbc:mysql://f1-manager-db.czam0qussyez.us-east-1.rds.amazonaws.com:3306/f1_manager");
-    private static final String USER = getConfig("db.user", "F1_DB_USER", "f1_app");
-    private static final String PASSWORD = getConfig("db.password", "F1_DB_PASSWORD", "");
+    private static final String URL = "jdbc:mysql://f1-manager-db.czam0qussyez.us-east-1.rds.amazonaws.com:3306/f1manager";
+    private static final String USER = "f1_admin";
+    private static final String PASSWORD = "f1_manager";
 
     public static Connection getConnection() throws SQLException {
         try {

@@ -2,14 +2,13 @@ package com.f1manager.servlet;
 
 import com.f1manager.model.Escuderia;
 import com.f1manager.service.EscuderiaService;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.List;
 
-@WebServlet("/api/teams/*")
+
 public class EscuderiaServlet extends HttpServlet {
 
     private final EscuderiaService escuderiaService = new EscuderiaService();

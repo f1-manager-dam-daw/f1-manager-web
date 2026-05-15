@@ -2,14 +2,12 @@ package com.f1manager.servlet;
 
 import com.f1manager.model.Piloto;
 import com.f1manager.service.PilotoService;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.List;
 
-@WebServlet("/api/drivers/*")
 public class PilotoServlet extends HttpServlet {
 
     private final PilotoService pilotoService = new PilotoService();
