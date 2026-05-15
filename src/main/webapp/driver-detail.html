@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Driver Detail — F1 Manager</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-danger">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="index.html">🏎 F1 Manager</a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" href="drivers.html">Drivers</a>
+                <a class="nav-link" href="constructors.html">Constructors</a>
+                <a class="nav-link" href="races.html">Races</a>
+                <a class="nav-link" href="stats.html">Stats</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <a href="drivers.html" class="btn btn-outline-secondary btn-sm">← Back to Drivers</a>
+            <button id="deleteBtn" class="btn btn-outline-danger btn-sm">Delete Driver</button>
+        </div>
+
+        <div id="loadingMsg" class="text-center text-muted my-4">Loading driver...</div>
+        <div id="errorMsg" class="alert alert-danger d-none"></div>
+
+        <div id="driverDetail" class="d-none">
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h2 id="driverName" class="fw-bold"></h2>
+                    <div class="row mt-3">
+                        <div class="col-md-3">
+                            <p class="text-muted mb-1">Code</p>
+                            <p id="driverCode" class="fw-bold"></p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="text-muted mb-1">Number</p>
+                            <p id="driverNumber" class="fw-bold"></p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="text-muted mb-1">Nationality</p>
+                            <p id="driverNationality" class="fw-bold"></p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="text-muted mb-1">Date of Birth</p>
+                            <p id="driverDob" class="fw-bold"></p>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-4">
+                            <p class="text-muted mb-1">Total Points</p>
+                            <p id="driverPoints" class="fw-bold text-danger"></p>
+                        </div>
+                        <div class="col-md-4">
+                            <p class="text-muted mb-1">Race Wins</p>
+                            <p id="driverWins" class="fw-bold text-danger"></p>
+                        </div>
+                        <div class="col-md-4">
+                            <p class="text-muted mb-1">Podiums</p>
+                            <p id="driverPodiums" class="fw-bold text-danger"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/driver-detail.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

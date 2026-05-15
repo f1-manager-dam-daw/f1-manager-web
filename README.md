@@ -1,26 +1,47 @@
 # F1 Manager Web
 
-Java web application for managing Formula 1 data using a relational database.
+Proyecto Java para gestionar datos de Fórmula 1 con una base de datos relacional.
 
-## Project context
+## Stack previsto
 
-In-person May project for 1º DAM/DAW.
+- Java
+- HTML/CSS
+- Bootstrap
+- MySQL/MariaDB en AWS RDS
 
-## Planned technologies
+## Datos
 
-- Java web backend
-- Relational database: MariaDB/MySQL preferred
-- HTML, CSS and Bootstrap
-- JavaScript/fetch for selected asynchronous actions
-- GitHub Flow/Git Flow with Issues, branches, Pull Requests, tags and Release 1.0
+Se usará F1DB como dataset inicial, el cual ya se encuentra importado en AWS RDS.
 
-## Main entities
+Vistas auxiliares del proyecto:
 
-- Drivers
-- Constructors
-- Races
-- Results
+```text
+database/f1db_project_views.sql
+```
 
-## Setup instructions
+## Ramas
 
-Pending. See `docs/project-plan.md` while the project is being initialized.
+- `main`: versión final estable
+- `develop`: trabajo integrado
+- `feature/*`: funcionalidades
+
+## Configuración de Base de Datos (AWS RDS)
+
+El proyecto utiliza una base de datos alojada en AWS RDS. Para conectarse, es necesario configurar las credenciales localmente.
+
+1. Crea el directorio `src/main/resources` si no existe.
+2. Crea un archivo llamado `application-local.properties` dentro de ese directorio.
+3. Añade el siguiente contenido, reemplazando la contraseña por la proporcionada por el equipo:
+
+```properties
+db.url=jdbc:mysql://f1-manager-db.czam0qussyez.us-east-1.rds.amazonaws.com:3306/f1_manager
+db.user=f1_app
+db.password=TU_PASSWORD_AQUI
+```
+
+> **Nota:** Este archivo está ignorado en `.gitignore` para no subir contraseñas a GitHub.
+Alternativamente, se pueden utilizar las variables de entorno `F1_DB_URL`, `F1_DB_USER` y `F1_DB_PASSWORD`.
+
+## Ejecución
+
+Pendiente de completar cuando esté finalizado el setup del servidor web.

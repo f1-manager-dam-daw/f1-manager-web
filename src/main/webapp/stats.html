@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stats — F1 Manager</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-danger">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="index.html">🏎 F1 Manager</a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" href="drivers.html">Drivers</a>
+                <a class="nav-link" href="constructors.html">Constructors</a>
+                <a class="nav-link" href="races.html">Races</a>
+                <a class="nav-link active" href="stats.html">Stats</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <h2 class="mb-4">Statistics</h2>
+
+        <div id="loadingMsg" class="text-center text-muted my-4">Loading statistics...</div>
+        <div id="errorMsg" class="alert alert-danger d-none"></div>
+
+        <div id="statsContainer" class="d-none">
+            <div class="row g-4 mb-5">
+                <div class="col-md-3">
+                    <div class="card text-center shadow-sm">
+                        <div class="card-body">
+                            <h2 id="totalDrivers" class="fw-bold text-danger">—</h2>
+                            <p class="text-muted mb-0">Total Drivers</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card text-center shadow-sm">
+                        <div class="card-body">
+                            <h2 id="totalConstructors" class="fw-bold text-danger">—</h2>
+                            <p class="text-muted mb-0">Total Constructors</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card text-center shadow-sm">
+                        <div class="card-body">
+                            <h2 id="totalRaces" class="fw-bold text-danger">—</h2>
+                            <p class="text-muted mb-0">Total Races</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="card text-center shadow-sm">
+                        <div class="card-body">
+                            <h2 id="seasonsRange" class="fw-bold text-danger">—</h2>
+                            <p class="text-muted mb-0">Seasons</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="card shadow-sm">
+                        <div class="card-header bg-dark text-white">Top 10 Drivers by Wins</div>
+                        <div class="card-body p-0">
+                            <table class="table table-hover mb-0">
+                                <thead class="table-secondary">
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Driver</th>
+                                        <th>Nationality</th>
+                                        <th>Wins</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="topDriversBody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="card shadow-sm">
+                        <div class="card-header bg-dark text-white">Top 10 Constructors by Wins</div>
+                        <div class="card-body p-0">
+                            <table class="table table-hover mb-0">
+                                <thead class="table-secondary">
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Constructor</th>
+                                        <th>Nationality</th>
+                                        <th>Wins</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="topConstructorsBody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/stats.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

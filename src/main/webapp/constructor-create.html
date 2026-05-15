@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Constructor — F1 Manager</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-danger">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="index.html">🏎 F1 Manager</a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" href="drivers.html">Drivers</a>
+                <a class="nav-link active" href="constructors.html">Constructors</a>
+                <a class="nav-link" href="races.html">Races</a>
+                <a class="nav-link" href="stats.html">Stats</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <a href="constructors.html" class="btn btn-outline-secondary btn-sm mb-4">← Back to Constructors</a>
+        <h2 class="mb-4">Create Constructor</h2>
+
+        <div id="successMsg" class="alert alert-success d-none">Constructor created successfully.</div>
+        <div id="errorMsg" class="alert alert-danger d-none"></div>
+
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <div class="mb-3">
+                    <label class="form-label">ID <span class="text-danger">*</span></label>
+                    <input type="text" id="id" class="form-control" placeholder="e.g. ferrari">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Name <span class="text-danger">*</span></label>
+                    <input type="text" id="name" class="form-control" placeholder="e.g. Ferrari">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Full Name</label>
+                    <input type="text" id="fullName" class="form-control" placeholder="e.g. Scuderia Ferrari">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Nationality <span class="text-danger">*</span></label>
+                    <input type="text" id="nationality" class="form-control" placeholder="e.g. Italian">
+                </div>
+                <div class="d-flex gap-2">
+                    <button id="submitBtn" class="btn btn-danger">Create Constructor</button>
+                    <a href="constructors.html" class="btn btn-outline-secondary">Cancel</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/constructor-create.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
