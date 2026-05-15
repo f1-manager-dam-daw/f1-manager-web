@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Constructor Detail — F1 Manager</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-danger">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="index.html">🏎 F1 Manager</a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" href="drivers.html">Drivers</a>
+                <a class="nav-link active" href="constructors.html">Constructors</a>
+                <a class="nav-link" href="races.html">Races</a>
+                <a class="nav-link" href="stats.html">Stats</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <a href="constructors.html" class="btn btn-outline-secondary btn-sm mb-4">← Back to Constructors</a>
+
+        <div id="loadingMsg" class="text-center text-muted my-4">Loading constructor...</div>
+        <div id="errorMsg" class="alert alert-danger d-none"></div>
+
+        <div id="constructorDetail" class="d-none">
+            <div class="card shadow-sm mb-4">
+                <div class="card-body">
+                    <h2 id="constructorName" class="fw-bold"></h2>
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <p class="text-muted mb-1">Full Name</p>
+                            <p id="constructorFullName" class="fw-bold"></p>
+                        </div>
+                        <div class="col-md-6">
+                            <p class="text-muted mb-1">Nationality</p>
+                            <p id="constructorNationality" class="fw-bold"></p>
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-3">
+                            <p class="text-muted mb-1">Championships</p>
+                            <p id="constructorChampionships" class="fw-bold text-danger"></p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="text-muted mb-1">Race Wins</p>
+                            <p id="constructorWins" class="fw-bold text-danger"></p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="text-muted mb-1">Podiums</p>
+                            <p id="constructorPodiums" class="fw-bold text-danger"></p>
+                        </div>
+                        <div class="col-md-3">
+                            <p class="text-muted mb-1">Total Points</p>
+                            <p id="constructorPoints" class="fw-bold text-danger"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/constructor-detail.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

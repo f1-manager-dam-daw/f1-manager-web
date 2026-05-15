@@ -1,0 +1,48 @@
+body {
+    background-color: #f8f9fa;
+}
+
+.navbar-brand {
+    font-size: 1.4rem;
+    letter-spacing: 1px;
+}
+
+.card {
+    border: none;
+    border-radius: 10px;
+    transition: transform 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+}
+
+.table th {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.btn-danger {
+    background-color: #e10600;
+    border-color: #e10600;
+}
+
+.btn-danger:hover {
+    background-color: #b80500;
+    border-color: #b80500;
+}
+
+.pagination .page-link {
+    color: #e10600;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #e10600;
+    border-color: #e10600;
+    color: white;
+}
+
+#loadingMsg {
+    font-size: 1.1rem;
+}
