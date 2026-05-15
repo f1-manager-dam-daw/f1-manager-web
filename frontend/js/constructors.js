@@ -36,9 +36,9 @@ function renderTable() {
             <td>${constructor.name || "—"}</td>
             <td>${constructor.full_name || "—"}</td>
             <td>${constructor.nationality || "—"}</td>
-            <td>${constructor.total_championship_wins ?? "—"}</td>
-            <td>${constructor.total_race_wins ?? "—"}</td>
-            <td>${constructor.total_points ?? "—"}</td>
+            <td>${constructor.totalChampionshipWins ?? "—"}</td>
+            <td>${constructor.totalRaceWins ?? "—"}</td>
+            <td>${constructor.totalPoints ?? "—"}</td>
             <td><a href="constructor-detail.html?id=${constructor.id}" class="btn btn-sm btn-danger">View</a></td>
         `;
         tbody.appendChild(row);

@@ -16,10 +16,10 @@ async function loadDriver() {
         document.getElementById("driverCode").textContent = driver.code || "—";
         document.getElementById("driverNumber").textContent = driver.number || "—";
         document.getElementById("driverNationality").textContent = driver.nationality || "—";
-        document.getElementById("driverDob").textContent = driver.date_of_birth || "—";
-        document.getElementById("driverPoints").textContent = driver.total_points ?? "—";
-        document.getElementById("driverWins").textContent = driver.total_race_wins ?? "—";
-        document.getElementById("driverPodiums").textContent = driver.total_podiums ?? "—";
+        document.getElementById("driverDob").textContent = driver.dateOfBirth || "—";
+        document.getElementById("driverPoints").textContent = driver.totalPoints ?? "—";
+        document.getElementById("driverWins").textContent = driver.totalRaceWins ?? "—";
+        document.getElementById("driverPodiums").textContent = driver.totalPodiums ?? "—";
     } catch (error) {
         showError("Could not load driver details. Please try again later.");
     }
