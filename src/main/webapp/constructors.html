@@ -21,7 +21,12 @@
     </nav>
 
     <div class="container mt-4">
-        <h2 class="mb-4">Constructors</h2>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Constructors</h2>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addConstructorModal">
+                + Add Constructor
+            </button>
+        </div>
 
         <div class="mb-3">
             <input type="text" id="searchInput" class="form-control" placeholder="Search by name or nationality...">
@@ -47,7 +52,40 @@
             </table>
         </div>
 
-        <div id="paginationContainer" class="d-flex justify-content-center mt-3"></div>
+        <ul id="paginationContainer" class="pagination justify-content-center mt-3"></ul>
+    </div>
+
+    <!-- Add Constructor Modal -->
+    <div class="modal fade" id="addConstructorModal" tabindex="-1" aria-labelledby="addConstructorModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="addConstructorModalLabel">Add New Constructor</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="addConstructorForm">
+              <div class="mb-3">
+                <label for="constructorId" class="form-label">ID (e.g., ferrari)</label>
+                <input type="text" class="form-control" id="constructorId" required>
+              </div>
+              <div class="mb-3">
+                <label for="constructorName" class="form-label">Name (Short)</label>
+                <input type="text" class="form-control" id="constructorNameForm" required>
+              </div>
+              <div class="mb-3">
+                <label for="constructorFullName" class="form-label">Full Name</label>
+                <input type="text" class="form-control" id="constructorFullNameForm" required>
+              </div>
+              <div class="mb-3">
+                <label for="constructorNationality" class="form-label">Nationality</label>
+                <input type="text" class="form-control" id="constructorNationalityForm">
+              </div>
+              <button type="submit" class="btn btn-primary w-100">Save Constructor</button>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
 
     <script src="js/api.js"></script>

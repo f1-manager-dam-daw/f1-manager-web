@@ -103,4 +103,19 @@ public class EscuderiaDAO {
             stmt.executeUpdate();
         }
     }
+
+    public void update(Escuderia escuderia) throws SQLException {
+        String sql = "UPDATE constructor SET name = ?, full_name = ?, country_id = ? WHERE id = ?";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, escuderia.getName());
+            stmt.setString(2, escuderia.getFullName());
+            stmt.setString(3, escuderia.getNationality());
+            stmt.setString(4, escuderia.getId());
+
+            stmt.executeUpdate();
+        }
+    }
 }

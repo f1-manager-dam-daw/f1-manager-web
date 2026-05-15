@@ -62,8 +62,8 @@ public class PilotoDAO {
     }
 
     public void save(Piloto piloto) throws SQLException {
-        String sql = "INSERT INTO driver (id, name, first_name, last_name, full_name, abbreviation, permanent_number, date_of_birth, nationality_country_id) " +
-                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO driver (id, name, first_name, last_name, full_name, abbreviation, permanent_number, date_of_birth, nationality_country_id, gender, place_of_birth, country_of_birth_country_id, total_championship_wins, total_race_wins, total_podiums, total_points) " +
+                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -86,6 +86,13 @@ public class PilotoDAO {
                 stmt.setNull(8, Types.DATE);
             }
             stmt.setString(9, piloto.getNationality());
+            stmt.setString(10, "M"); // Default gender
+            stmt.setString(11, "Unknown"); // Default place of birth
+            stmt.setString(12, piloto.getNationality()); // Default country of birth
+            stmt.setInt(13, 0); // total_championship_wins
+            stmt.setInt(14, 0); // total_race_wins
+            stmt.setInt(15, 0); // total_podiums
+            stmt.setDouble(16, 0.0); // total_points
 
             stmt.executeUpdate();
         }
@@ -98,6 +105,24 @@ public class PilotoDAO {
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, id);
+            stmt.executeUpdate();
+        }
+    }
+    public void update(Piloto piloto) throws SQLException {
+        String sql = "UPDATE driver SET first_name = ?, last_name = ?, name = ?, full_name = ?, abbreviation = ?, nationality_country_id = ? WHERE id = ?";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            String fullName = piloto.getForename() + " " + piloto.getSurname();
+            stmt.setString(1, piloto.getForename());
+            stmt.setString(2, piloto.getSurname());
+            stmt.setString(3, fullName);
+            stmt.setString(4, fullName);
+            stmt.setString(5, piloto.getCode());
+            stmt.setString(6, piloto.getNationality());
+            stmt.setString(7, piloto.getId());
+
             stmt.executeUpdate();
         }
     }
