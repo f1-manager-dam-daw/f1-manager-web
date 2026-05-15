@@ -37,12 +37,18 @@ function renderTable() {
             <td>${driver.forename} ${driver.surname}</td>
             <td>${driver.nationality || "—"}</td>
             <td>${driver.number || "—"}</td>
+<<<<<<< HEAD
+            <td>${driver.totalRaceWins ?? "—"}</td>
+            <td>${driver.totalPoints ?? "—"}</td>
+            <td><a href="driver-detail.html?id=${driver.id}" class="btn btn-sm btn-danger">View</a></td>
+=======
             <td>${driver.total_race_wins ?? "—"}</td>
             <td>${driver.total_points ?? "—"}</td>
             <td>
                 <a href="driver-detail.html?id=${driver.id}" class="btn btn-sm btn-danger">View</a>
                 <button class="btn btn-sm btn-outline-danger" onclick="deleteDriver('${driver.id}')">Delete</button>
             </td>
+>>>>>>> origin/develop
         `;
         tbody.appendChild(row);
     });

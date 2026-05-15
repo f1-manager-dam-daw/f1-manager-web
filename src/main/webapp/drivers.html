@@ -23,9 +23,7 @@
     <div class="container mt-4">
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2>Drivers</h2>
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addDriverModal">
-                + Add Driver
-            </button>
+            <a href="driver-create.html" class="btn btn-danger">+ Create Driver</a>
         </div>
 
         <div class="mb-3">
@@ -53,43 +51,6 @@
         </div>
 
         <div id="paginationContainer" class="d-flex justify-content-center mt-3"></div>
-    </div>
-
-    <!-- Add Driver Modal -->
-    <div class="modal fade" id="addDriverModal" tabindex="-1" aria-labelledby="addDriverModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="addDriverModalLabel">Add New Driver</h5>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          </div>
-          <div class="modal-body">
-            <form id="addDriverForm">
-              <div class="mb-3">
-                <label for="driverId" class="form-label">ID (e.g., max_verstappen)</label>
-                <input type="text" class="form-control" id="driverId" required>
-              </div>
-              <div class="mb-3">
-                <label for="driverForename" class="form-label">Forename</label>
-                <input type="text" class="form-control" id="driverForename" required>
-              </div>
-              <div class="mb-3">
-                <label for="driverSurname" class="form-label">Surname</label>
-                <input type="text" class="form-control" id="driverSurname" required>
-              </div>
-              <div class="mb-3">
-                <label for="driverCode" class="form-label">Code (3 Letters)</label>
-                <input type="text" class="form-control" id="driverCode" maxlength="3">
-              </div>
-              <div class="mb-3">
-                <label for="driverNationality" class="form-label">Nationality</label>
-                <input type="text" class="form-control" id="driverNationality">
-              </div>
-              <button type="submit" class="btn btn-primary w-100">Save Driver</button>
-            </form>
-          </div>
-        </div>
-      </div>
     </div>
 
     <script src="js/api.js"></script>

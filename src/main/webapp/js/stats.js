@@ -35,7 +35,7 @@ function renderTopDrivers(drivers) {
             <td>${index + 1}</td>
             <td>${driver.forename} ${driver.surname}</td>
             <td>${driver.nationality || "—"}</td>
-            <td>${driver.total_race_wins ?? "—"}</td>
+            <td>${driver.totalRaceWins ?? "—"}</td>
         `;
         tbody.appendChild(row);
     });
@@ -54,7 +54,7 @@ function renderTopConstructors(constructors) {
             <td>${index + 1}</td>
             <td>${constructor.name || "—"}</td>
             <td>${constructor.nationality || "—"}</td>
-            <td>${constructor.total_race_wins ?? "—"}</td>
+            <td>${constructor.totalRaceWins ?? "—"}</td>
         `;
         tbody.appendChild(row);
     });
