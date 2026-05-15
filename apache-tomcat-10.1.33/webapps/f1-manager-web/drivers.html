@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drivers — F1 Manager</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-danger">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="index.html">🏎 F1 Manager</a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link active" href="drivers.html">Drivers</a>
+                <a class="nav-link" href="constructors.html">Constructors</a>
+                <a class="nav-link" href="races.html">Races</a>
+                <a class="nav-link" href="stats.html">Stats</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Drivers</h2>
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addDriverModal">
+                + Add Driver
+            </button>
+        </div>
+
+        <div class="mb-3">
+            <input type="text" id="searchInput" class="form-control" placeholder="Search by name, code or nationality...">
+        </div>
+
+        <div id="loadingMsg" class="text-center text-muted my-4">Loading drivers...</div>
+        <div id="errorMsg" class="alert alert-danger d-none"></div>
+
+        <div id="driversTableContainer" class="d-none">
+            <table class="table table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Code</th>
+                        <th>Name</th>
+                        <th>Nationality</th>
+                        <th>Number</th>
+                        <th>Wins</th>
+                        <th>Points</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody id="driversTableBody"></tbody>
+            </table>
+        </div>
+
+        <div id="paginationContainer" class="d-flex justify-content-center mt-3"></div>
+    </div>
+
+    <!-- Add Driver Modal -->
+    <div class="modal fade" id="addDriverModal" tabindex="-1" aria-labelledby="addDriverModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="addDriverModalLabel">Add New Driver</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="addDriverForm">
+              <div class="mb-3">
+                <label for="driverId" class="form-label">ID (e.g., max_verstappen)</label>
+                <input type="text" class="form-control" id="driverId" required>
+              </div>
+              <div class="mb-3">
+                <label for="driverForename" class="form-label">Forename</label>
+                <input type="text" class="form-control" id="driverForename" required>
+              </div>
+              <div class="mb-3">
+                <label for="driverSurname" class="form-label">Surname</label>
+                <input type="text" class="form-control" id="driverSurname" required>
+              </div>
+              <div class="mb-3">
+                <label for="driverCode" class="form-label">Code (3 Letters)</label>
+                <input type="text" class="form-control" id="driverCode" maxlength="3">
+              </div>
+              <div class="mb-3">
+                <label for="driverNationality" class="form-label">Nationality</label>
+                <input type="text" class="form-control" id="driverNationality">
+              </div>
+              <button type="submit" class="btn btn-primary w-100">Save Driver</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/drivers.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
