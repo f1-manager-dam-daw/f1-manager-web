@@ -1,4 +1,4 @@
-const API_BASE_URL = "http://localhost:8080/f1-manager-web/api";
+const API_BASE_URL = "/api";
 
 async function apiGet(endpoint) {
     const response = await fetch(`${API_BASE_URL}${endpoint}`);
