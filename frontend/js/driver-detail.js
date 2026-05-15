@@ -8,7 +8,7 @@ async function loadDriver() {
     }
 
     try {
-        const driver = await apiGet(`/drivers/${id}`);
+        const driver = await apiGet(`/drivers?id=${id}`);
         document.getElementById("loadingMsg").classList.add("d-none");
         document.getElementById("driverDetail").classList.remove("d-none");
 
@@ -41,7 +41,7 @@ document.getElementById("deleteBtn").addEventListener("click", async function ()
     if (!confirm("Are you sure you want to delete this driver? This action cannot be undone.")) return;
 
     try {
-        const response = await fetch(`${API_BASE_URL}/drivers/${id}`, {
+        const response = await fetch(`${API_BASE_URL}/drivers?id=${id}`, {
             method: "DELETE"
         });
 
