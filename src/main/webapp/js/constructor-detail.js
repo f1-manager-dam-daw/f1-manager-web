@@ -19,6 +19,12 @@ async function loadConstructor() {
         document.getElementById("constructorWins").textContent = constructor.totalRaceWins ?? "—";
         document.getElementById("constructorPodiums").textContent = constructor.totalPodiums ?? "—";
         document.getElementById("constructorPoints").textContent = constructor.totalPoints ?? "—";
+
+        // Fill Edit Modal
+        document.getElementById("editConstructorId").value = constructor.id;
+        document.getElementById("editConstructorName").value = constructor.name || "";
+        document.getElementById("editConstructorFullName").value = constructor.fullName || "";
+        document.getElementById("editConstructorNationality").value = constructor.nationality || "";
     } catch (error) {
         showError("Could not load constructor details. Please try again later.");
     }

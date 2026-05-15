@@ -6,7 +6,21 @@ let filteredDrivers = [];
 async function loadDrivers() {
     try {
         allDrivers = await apiGet("/drivers");
-        filteredDrivers = allDrivers;
+        
+        const query = document.getElementById("searchInput").value.toLowerCase();
+        if (query) {
+            filteredDrivers = allDrivers.filter(d =>
+                (d.forename + " " + d.surname).toLowerCase().includes(query) ||
+                (d.code || "").toLowerCase().includes(query) ||
+                (d.nationality || "").toLowerCase().includes(query)
+            );
+        } else {
+            filteredDrivers = allDrivers;
+        }
+        
+        const totalPages = Math.ceil(filteredDrivers.length / PAGE_SIZE);
+        if (currentPage > totalPages) currentPage = totalPages || 1;
+
         document.getElementById("loadingMsg").classList.add("d-none");
         document.getElementById("driversTableContainer").classList.remove("d-none");
         renderTable();

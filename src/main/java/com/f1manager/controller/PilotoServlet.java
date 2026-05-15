@@ -42,7 +42,7 @@ public class PilotoServlet extends HttpServlet {
                 List<Piloto> pilotos = pilotoDAO.findAll();
                 out.print(gson.toJson(pilotos));
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             out.print("{\"error\": \"" + e.getMessage() + "\"}");
         }
@@ -95,12 +95,46 @@ public class PilotoServlet extends HttpServlet {
             resp.setStatus(HttpServletResponse.SC_OK);
             out.print("{\"message\": \"Driver deleted successfully\"}");
         } catch (SQLException e) {
+            resp.setStatus(HttpServletResponse.SC_CONFLICT);
+            String message = "Database error";
+            if (e.getMessage() != null && e.getMessage().contains("foreign key constraint fails")) {
+                message = "Cannot delete this driver because they have associated race data. Please delete the related data first.";
+            } else {
+                message = e.getMessage();
+            }
+            out.print("{\"error\": \"" + message + "\"}");
+        } catch (Exception e) {
             resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             out.print("{\"error\": \"" + e.getMessage() + "\"}");
         }
         out.flush();
     }
     
+    @Override
+    protected void doPut(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        setCorsHeaders(resp);
+        resp.setContentType("application/json");
+        resp.setCharacterEncoding("UTF-8");
+        PrintWriter out = resp.getWriter();
+
+        try {
+            Piloto p = gson.fromJson(req.getReader(), Piloto.class);
+            if (p.getId() == null || p.getId().isEmpty()) {
+                resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
+                out.print("{\"error\": \"Missing driver id\"}");
+                return;
+            }
+
+            pilotoDAO.update(p);
+            resp.setStatus(HttpServletResponse.SC_OK);
+            out.print("{\"message\": \"Driver updated successfully\"}");
+        } catch (Exception e) {
+            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            out.print("{\"error\": \"" + e.getMessage() + "\"}");
+        }
+        out.flush();
+    }
+
     @Override
     protected void doOptions(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         setCorsHeaders(resp);
@@ -109,7 +143,7 @@ public class PilotoServlet extends HttpServlet {
 
     private void setCorsHeaders(HttpServletResponse resp) {
         resp.setHeader("Access-Control-Allow-Origin", "*");
-        resp.setHeader("Access-Control-Allow-Methods", "GET, POST, DELETE, OPTIONS");
+        resp.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
         resp.setHeader("Access-Control-Allow-Headers", "Content-Type");
     }
 }

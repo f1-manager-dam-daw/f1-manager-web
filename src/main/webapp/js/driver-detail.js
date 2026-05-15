@@ -20,6 +20,13 @@ async function loadDriver() {
         document.getElementById("driverPoints").textContent = driver.totalPoints ?? "—";
         document.getElementById("driverWins").textContent = driver.totalRaceWins ?? "—";
         document.getElementById("driverPodiums").textContent = driver.totalPodiums ?? "—";
+
+        // Fill Edit Modal
+        document.getElementById("editDriverId").value = driver.id;
+        document.getElementById("editForename").value = driver.forename || "";
+        document.getElementById("editSurname").value = driver.surname || "";
+        document.getElementById("editCode").value = driver.code || "";
+        document.getElementById("editNationality").value = driver.nationality || "";
     } catch (error) {
         showError("Could not load driver details. Please try again later.");
     }

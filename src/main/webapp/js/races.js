@@ -6,7 +6,13 @@ let filteredRaces = [];
 async function loadRaces() {
     try {
         allRaces = await apiGet("/races");
-        filteredRaces = allRaces;
+
+        const year = document.getElementById("yearFilter").value;
+        filteredRaces = year ? allRaces.filter(r => r.year == year) : allRaces;
+
+        const totalPages = Math.ceil(filteredRaces.length / PAGE_SIZE);
+        if (currentPage > totalPages) currentPage = totalPages || 1;
+
         document.getElementById("loadingMsg").classList.add("d-none");
         document.getElementById("racesTableContainer").classList.remove("d-none");
         populateYearFilter();
@@ -47,8 +53,8 @@ function renderTable() {
         row.innerHTML = `
             <td>${race.year || "—"}</td>
             <td>${race.round || "—"}</td>
-            <td>${race.name || race.official_name || "—"}</td>
-            <td>${race.circuit_name || "—"}</td>
+            <td>${race.name || race.officialName || "—"}</td>
+            <td>${race.circuitName || "—"}</td>
             <td>${race.date || "—"}</td>
             <td>${race.laps || "—"}</td>
             <td><a href="race-detail.html?id=${race.id}" class="btn btn-sm btn-danger">View</a></td>

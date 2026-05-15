@@ -29,7 +29,12 @@
         <div id="constructorDetail" class="d-none">
             <div class="card shadow-sm mb-4">
                 <div class="card-body">
-                    <h2 id="constructorName" class="fw-bold"></h2>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h2 id="constructorName" class="fw-bold"></h2>
+                        <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editConstructorModal">
+                            Edit Constructor
+                        </button>
+                    </div>
                     <div class="row mt-3">
                         <div class="col-md-6">
                             <p class="text-muted mb-1">Full Name</p>
@@ -61,6 +66,36 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <!-- Edit Constructor Modal -->
+    <div class="modal fade" id="editConstructorModal" tabindex="-1" aria-labelledby="editConstructorModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="editConstructorModalLabel">Edit Constructor</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="editConstructorForm">
+              <input type="hidden" id="editConstructorId">
+              <div class="mb-3">
+                <label for="editConstructorName" class="form-label">Name (Short)</label>
+                <input type="text" class="form-control" id="editConstructorName" required>
+              </div>
+              <div class="mb-3">
+                <label for="editConstructorFullName" class="form-label">Full Name</label>
+                <input type="text" class="form-control" id="editConstructorFullName" required>
+              </div>
+              <div class="mb-3">
+                <label for="editConstructorNationality" class="form-label">Nationality</label>
+                <input type="text" class="form-control" id="editConstructorNationality">
+              </div>
+              <button type="submit" class="btn btn-warning w-100">Update Constructor</button>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
 
     <script src="js/api.js"></script>

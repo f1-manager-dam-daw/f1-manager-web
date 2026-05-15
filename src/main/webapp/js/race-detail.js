@@ -12,11 +12,11 @@ async function loadRace() {
         document.getElementById("loadingMsg").classList.add("d-none");
         document.getElementById("raceDetail").classList.remove("d-none");
 
-        document.getElementById("raceName").textContent = race.name || race.official_name || "—";
+        document.getElementById("raceName").textContent = race.name || race.officialName || "—";
         document.getElementById("raceYear").textContent = race.year || "—";
         document.getElementById("raceRound").textContent = race.round || "—";
         document.getElementById("raceDate").textContent = race.date || "—";
-        document.getElementById("raceCircuit").textContent = race.circuit_name || "—";
+        document.getElementById("raceCircuit").textContent = race.circuitName || "—";
         document.getElementById("raceLaps").textContent = race.laps || "—";
         document.getElementById("raceDistance").textContent = race.distance ? `${race.distance} km` : "—";
 
@@ -43,9 +43,9 @@ async function loadResults(raceId) {
         results.forEach(result => {
             const row = document.createElement("tr");
             row.innerHTML = `
-                <td>${result.position_text || result.position || "—"}</td>
-                <td>${result.driver_id || "—"}</td>
-                <td>${result.constructor_id || "—"}</td>
+                <td>${result.positionText || result.position || "—"}</td>
+                <td>${result.driverId || "—"}</td>
+                <td>${result.constructorId || "—"}</td>
                 <td>${result.grid ?? "—"}</td>
                 <td>${result.laps ?? "—"}</td>
                 <td>${result.points ?? "—"}</td>
