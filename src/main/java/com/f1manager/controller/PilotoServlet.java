@@ -42,7 +42,7 @@ public class PilotoServlet extends HttpServlet {
                 List<Piloto> pilotos = pilotoDAO.findAll();
                 out.print(gson.toJson(pilotos));
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             out.print("{\"error\": \"" + e.getMessage() + "\"}");
         }
@@ -97,12 +97,15 @@ public class PilotoServlet extends HttpServlet {
         } catch (SQLException e) {
             resp.setStatus(HttpServletResponse.SC_CONFLICT);
             String message = "Database error";
-            if (e.getMessage().contains("foreign key constraint fails")) {
+            if (e.getMessage() != null && e.getMessage().contains("foreign key constraint fails")) {
                 message = "Cannot delete this driver because they have associated race data. Please delete the related data first.";
             } else {
                 message = e.getMessage();
             }
             out.print("{\"error\": \"" + message + "\"}");
+        } catch (Exception e) {
+            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            out.print("{\"error\": \"" + e.getMessage() + "\"}");
         }
         out.flush();
     }

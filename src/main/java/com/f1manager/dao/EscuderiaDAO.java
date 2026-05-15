@@ -94,12 +94,47 @@ public class EscuderiaDAO {
     }
 
     public void delete(String id) throws SQLException {
-        String sql = "DELETE FROM constructor WHERE id = ?";
+        try (Connection conn = DatabaseConnection.getConnection()) {
+            conn.setAutoCommit(false);
 
-        try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            try {
+                // Delete child records first to avoid foreign-key RESTRICT errors.
+                executeDelete(conn, "DELETE FROM race_data WHERE constructor_id = ?", id);
+                executeDelete(conn, "DELETE FROM race_constructor_standing WHERE constructor_id = ?", id);
+                executeDelete(conn, "DELETE FROM season_constructor WHERE constructor_id = ?", id);
+                executeDelete(conn, "DELETE FROM season_constructor_standing WHERE constructor_id = ?", id);
+                executeDelete(conn, "DELETE FROM season_entrant_constructor WHERE constructor_id = ?", id);
+                executeDelete(conn, "DELETE FROM season_entrant_driver WHERE constructor_id = ?", id);
+                executeDelete(conn, "DELETE FROM season_entrant_engine WHERE constructor_id = ?", id);
+                executeDelete(conn, "DELETE FROM season_entrant_tyre_manufacturer WHERE constructor_id = ?", id);
 
-            stmt.setString(1, id);
+                // Chassis records depend on constructor, and season_entrant_chassis may depend on chassis.
+                executeDelete(conn,
+                        "DELETE FROM season_entrant_chassis " +
+                        "WHERE constructor_id = ? OR chassis_id IN (SELECT id FROM chassis WHERE constructor_id = ?)",
+                        id, id);
+                executeDelete(conn, "DELETE FROM chassis WHERE constructor_id = ?", id);
+
+                executeDelete(conn, "DELETE FROM constructor_chronology WHERE constructor_id = ? OR other_constructor_id = ?", id, id);
+
+                // Finally delete the parent constructor.
+                executeDelete(conn, "DELETE FROM constructor WHERE id = ?", id);
+
+                conn.commit();
+            } catch (SQLException ex) {
+                conn.rollback();
+                throw ex;
+            } finally {
+                conn.setAutoCommit(true);
+            }
+        }
+    }
+
+    private void executeDelete(Connection conn, String sql, String... params) throws SQLException {
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            for (int i = 0; i < params.length; i++) {
+                stmt.setString(i + 1, params[i]);
+            }
             stmt.executeUpdate();
         }
     }

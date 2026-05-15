@@ -1,0 +1,50 @@
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] --------------------< com.f1manager:f1-manager-web >--------------------
+[INFO] Building f1-manager-web 1.0-SNAPSHOT
+[INFO]   from pom.xml
+[INFO] --------------------------------[ war ]---------------------------------
+[INFO] 
+[INFO] --- exec:3.6.3:java (default-cli) @ f1-manager-web ---
+Field | Type | Null | Key | Default | Extra
+id | varchar(100) | NO | PRI | null | 
+name | varchar(100) | NO | MUL | null | 
+first_name | varchar(100) | NO | MUL | null | 
+last_name | varchar(100) | NO | MUL | null | 
+full_name | varchar(100) | NO | MUL | null | 
+abbreviation | varchar(3) | NO | MUL | null | 
+permanent_number | varchar(2) | YES | MUL | null | 
+gender | varchar(6) | NO | MUL | null | 
+date_of_birth | date | NO | MUL | null | 
+date_of_death | date | YES | MUL | null | 
+place_of_birth | varchar(100) | NO | MUL | null | 
+country_of_birth_country_id | varchar(100) | NO | MUL | null | 
+nationality_country_id | varchar(100) | NO | MUL | null | 
+second_nationality_country_id | varchar(100) | YES | MUL | null | 
+best_championship_position | int(11) | YES |  | null | 
+best_starting_grid_position | int(11) | YES |  | null | 
+best_race_result | int(11) | YES |  | null | 
+best_sprint_race_result | int(11) | YES |  | null | 
+total_championship_wins | int(11) | NO |  | null | 
+total_race_entries | int(11) | NO |  | null | 
+total_race_starts | int(11) | NO |  | null | 
+total_race_wins | int(11) | NO |  | null | 
+total_race_laps | int(11) | NO |  | null | 
+total_podiums | int(11) | NO |  | null | 
+total_points | decimal(8,2) | NO |  | null | 
+total_championship_points | decimal(8,2) | NO |  | null | 
+total_pole_positions | int(11) | NO |  | null | 
+total_fastest_laps | int(11) | NO |  | null | 
+total_sprint_race_starts | int(11) | NO |  | null | 
+total_sprint_race_wins | int(11) | NO |  | null | 
+total_driver_of_the_day | int(11) | NO |  | null | 
+total_grand_slams | int(11) | NO |  | null | 
+[WARNING] thread Thread[#44,mysql-cj-abandoned-connection-cleanup,5,com.f1manager.dao.DescribeTable] was interrupted but is still alive after waiting at least 15000msecs
+[WARNING] thread Thread[#44,mysql-cj-abandoned-connection-cleanup,5,com.f1manager.dao.DescribeTable] will linger despite being asked to die via interruption
+[WARNING] NOTE: 1 thread(s) did not finish despite being asked to via interruption. This is not a problem with exec:java, it is a problem with the running code. Although not serious, it should be remedied.
+[INFO] ------------------------------------------------------------------------
+[INFO] BUILD SUCCESS
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  17.529 s
+[INFO] Finished at: 2026-05-15T18:35:10+02:00
+[INFO] ------------------------------------------------------------------------

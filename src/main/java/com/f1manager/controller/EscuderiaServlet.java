@@ -42,7 +42,7 @@ public class EscuderiaServlet extends HttpServlet {
                 List<Escuderia> escuderias = escuderiaDAO.findAll();
                 out.print(gson.toJson(escuderias));
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             out.print("{\"error\": \"" + e.getMessage() + "\"}");
         }
@@ -94,12 +94,15 @@ public class EscuderiaServlet extends HttpServlet {
         } catch (SQLException e) {
             resp.setStatus(HttpServletResponse.SC_CONFLICT);
             String message = "Database error";
-            if (e.getMessage().contains("foreign key constraint fails")) {
+            if (e.getMessage() != null && e.getMessage().contains("foreign key constraint fails")) {
                 message = "Cannot delete this constructor because it has associated data (races or results).";
             } else {
                 message = e.getMessage();
             }
             out.print("{\"error\": \"" + message + "\"}");
+        } catch (Exception e) {
+            resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            out.print("{\"error\": \"" + e.getMessage() + "\"}");
         }
         out.flush();
     }
