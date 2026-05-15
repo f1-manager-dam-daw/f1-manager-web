@@ -53,8 +53,8 @@ function renderTable() {
         row.innerHTML = `
             <td>${race.year || "—"}</td>
             <td>${race.round || "—"}</td>
-            <td>${race.name || race.official_name || "—"}</td>
-            <td>${race.circuit_name || "—"}</td>
+            <td>${race.name || race.officialName || "—"}</td>
+            <td>${race.circuitName || "—"}</td>
             <td>${race.date || "—"}</td>
             <td>${race.laps || "—"}</td>
             <td><a href="race-detail.html?id=${race.id}" class="btn btn-sm btn-danger">View</a></td>

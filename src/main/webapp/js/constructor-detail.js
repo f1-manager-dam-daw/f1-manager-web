@@ -13,17 +13,17 @@ async function loadConstructor() {
         document.getElementById("constructorDetail").classList.remove("d-none");
 
         document.getElementById("constructorName").textContent = constructor.name || "—";
-        document.getElementById("constructorFullName").textContent = constructor.full_name || "—";
+        document.getElementById("constructorFullName").textContent = constructor.fullName || "—";
         document.getElementById("constructorNationality").textContent = constructor.nationality || "—";
-        document.getElementById("constructorChampionships").textContent = constructor.total_championship_wins ?? "—";
-        document.getElementById("constructorWins").textContent = constructor.total_race_wins ?? "—";
-        document.getElementById("constructorPodiums").textContent = constructor.total_podiums ?? "—";
-        document.getElementById("constructorPoints").textContent = constructor.total_points ?? "—";
+        document.getElementById("constructorChampionships").textContent = constructor.totalChampionshipWins ?? "—";
+        document.getElementById("constructorWins").textContent = constructor.totalRaceWins ?? "—";
+        document.getElementById("constructorPodiums").textContent = constructor.totalPodiums ?? "—";
+        document.getElementById("constructorPoints").textContent = constructor.totalPoints ?? "—";
 
         // Fill Edit Modal
         document.getElementById("editConstructorId").value = constructor.id;
         document.getElementById("editConstructorName").value = constructor.name || "";
-        document.getElementById("editConstructorFullName").value = constructor.full_name || "";
+        document.getElementById("editConstructorFullName").value = constructor.fullName || "";
         document.getElementById("editConstructorNationality").value = constructor.nationality || "";
     } catch (error) {
         showError("Could not load constructor details. Please try again later.");

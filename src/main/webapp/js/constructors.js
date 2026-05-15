@@ -11,7 +11,7 @@ async function loadConstructors() {
         if (query) {
             filteredConstructors = allConstructors.filter(c =>
                 (c.name || "").toLowerCase().includes(query) ||
-                (c.full_name || "").toLowerCase().includes(query) ||
+                (c.fullName || "").toLowerCase().includes(query) ||
                 (c.nationality || "").toLowerCase().includes(query)
             );
         } else {
@@ -48,11 +48,11 @@ function renderTable() {
         const row = document.createElement("tr");
         row.innerHTML = `
             <td>${constructor.name || "—"}</td>
-            <td>${constructor.full_name || "—"}</td>
+            <td>${constructor.fullName || "—"}</td>
             <td>${constructor.nationality || "—"}</td>
-            <td>${constructor.total_championship_wins ?? "—"}</td>
-            <td>${constructor.total_race_wins ?? "—"}</td>
-            <td>${constructor.total_points ?? "—"}</td>
+            <td>${constructor.totalChampionshipWins ?? "—"}</td>
+            <td>${constructor.totalRaceWins ?? "—"}</td>
+            <td>${constructor.totalPoints ?? "—"}</td>
             <td>
                 <a href="constructor-detail.html?id=${constructor.id}" class="btn btn-sm btn-danger">View</a>
                 <button class="btn btn-sm btn-outline-danger" onclick="deleteConstructor('${constructor.id}')">Delete</button>
@@ -103,7 +103,7 @@ document.getElementById("searchInput").addEventListener("input", function () {
     const query = this.value.toLowerCase();
     filteredConstructors = allConstructors.filter(c =>
         (c.name || "").toLowerCase().includes(query) ||
-        (c.full_name || "").toLowerCase().includes(query) ||
+        (c.fullName || "").toLowerCase().includes(query) ||
         (c.nationality || "").toLowerCase().includes(query)
     );
     currentPage = 1;

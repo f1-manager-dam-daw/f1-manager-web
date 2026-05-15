@@ -51,7 +51,7 @@ public class StatsDAO {
                     driver.put("forename", rs.getString("forename"));
                     driver.put("surname", rs.getString("surname"));
                     driver.put("nationality", rs.getString("nationality"));
-                    driver.put("total_race_wins", rs.getInt("total_race_wins"));
+                    driver.put("totalRaceWins", rs.getInt("total_race_wins"));
                     topDrivers.add(driver);
                 }
             }
@@ -65,7 +65,7 @@ public class StatsDAO {
                     Map<String, Object> constructor = new HashMap<>();
                     constructor.put("name", rs.getString("name"));
                     constructor.put("nationality", rs.getString("nationality"));
-                    constructor.put("total_race_wins", rs.getInt("total_race_wins"));
+                    constructor.put("totalRaceWins", rs.getInt("total_race_wins"));
                     topConstructors.add(constructor);
                 }
             }
