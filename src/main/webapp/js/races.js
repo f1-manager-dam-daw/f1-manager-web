@@ -63,18 +63,47 @@ function renderPagination() {
     const totalPages = Math.ceil(filteredRaces.length / PAGE_SIZE);
     if (totalPages <= 1) return;
 
-    for (let i = 1; i <= totalPages; i++) {
+    const ul = document.createElement("ul");
+    ul.className = "pagination";
+
+    const addPage = (label, page, disabled = false, active = false) => {
         const li = document.createElement("li");
-        li.className = `page-item ${i === currentPage ? "active" : ""}`;
-        li.innerHTML = `<a class="page-link" href="#">${i}</a>`;
-        li.addEventListener("click", (e) => {
-            e.preventDefault();
-            currentPage = i;
-            renderTable();
-            renderPagination();
-        });
-        container.appendChild(li);
+        li.className = `page-item ${disabled ? "disabled" : ""} ${active ? "active" : ""}`;
+        li.innerHTML = `<a class="page-link" href="#">${label}</a>`;
+        if (!disabled) {
+            li.addEventListener("click", (e) => {
+                e.preventDefault();
+                currentPage = page;
+                renderTable();
+                renderPagination();
+            });
+        }
+        ul.appendChild(li);
+    };
+
+    addPage("«", currentPage - 1, currentPage === 1);
+
+    const delta = 2;
+    const range = [];
+    for (let i = Math.max(1, currentPage - delta); i <= Math.min(totalPages, currentPage + delta); i++) {
+        range.push(i);
     }
+
+    if (range[0] > 1) {
+        addPage(1, 1);
+        if (range[0] > 2) addPage("...", null, true);
+    }
+
+    range.forEach(i => addPage(i, i, false, i === currentPage));
+
+    if (range[range.length - 1] < totalPages) {
+        if (range[range.length - 1] < totalPages - 1) addPage("...", null, true);
+        addPage(totalPages, totalPages);
+    }
+
+    addPage("»", currentPage + 1, currentPage === totalPages);
+
+    container.appendChild(ul);
 }
 
 document.getElementById("yearFilter").addEventListener("change", function () {
