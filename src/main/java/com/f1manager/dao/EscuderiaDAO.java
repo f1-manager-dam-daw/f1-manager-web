@@ -56,4 +56,51 @@ public class EscuderiaDAO {
         }
         return null;
     }
+
+    public void save(Escuderia escuderia) throws SQLException {
+        String sql = "INSERT INTO constructor (id, name, full_name, country_id, total_points, total_race_wins, total_podiums, total_championship_wins) " +
+                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, escuderia.getId());
+            stmt.setString(2, escuderia.getName());
+            stmt.setString(3, escuderia.getFullName());
+            stmt.setString(4, escuderia.getNationality());
+            if (escuderia.getTotalPoints() != null) {
+                stmt.setDouble(5, escuderia.getTotalPoints());
+            } else {
+                stmt.setNull(5, Types.DECIMAL);
+            }
+            if (escuderia.getTotalRaceWins() != null) {
+                stmt.setInt(6, escuderia.getTotalRaceWins());
+            } else {
+                stmt.setNull(6, Types.INTEGER);
+            }
+            if (escuderia.getTotalPodiums() != null) {
+                stmt.setInt(7, escuderia.getTotalPodiums());
+            } else {
+                stmt.setNull(7, Types.INTEGER);
+            }
+            if (escuderia.getTotalChampionshipWins() != null) {
+                stmt.setInt(8, escuderia.getTotalChampionshipWins());
+            } else {
+                stmt.setNull(8, Types.INTEGER);
+            }
+
+            stmt.executeUpdate();
+        }
+    }
+
+    public void delete(String id) throws SQLException {
+        String sql = "DELETE FROM constructor WHERE id = ?";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, id);
+            stmt.executeUpdate();
+        }
+    }
 }

@@ -60,4 +60,45 @@ public class PilotoDAO {
         }
         return null;
     }
+
+    public void save(Piloto piloto) throws SQLException {
+        String sql = "INSERT INTO driver (id, name, first_name, last_name, full_name, abbreviation, permanent_number, date_of_birth, nationality_country_id) " +
+                     "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            String fullName = piloto.getForename() + " " + piloto.getSurname();
+            stmt.setString(1, piloto.getId());
+            stmt.setString(2, fullName);
+            stmt.setString(3, piloto.getForename());
+            stmt.setString(4, piloto.getSurname());
+            stmt.setString(5, fullName);
+            stmt.setString(6, piloto.getCode());
+            if (piloto.getNumber() != null) {
+                stmt.setString(7, String.valueOf(piloto.getNumber()));
+            } else {
+                stmt.setNull(7, Types.VARCHAR);
+            }
+            if (piloto.getDateOfBirth() != null && !piloto.getDateOfBirth().isEmpty()) {
+                stmt.setDate(8, java.sql.Date.valueOf(piloto.getDateOfBirth()));
+            } else {
+                stmt.setNull(8, Types.DATE);
+            }
+            stmt.setString(9, piloto.getNationality());
+
+            stmt.executeUpdate();
+        }
+    }
+
+    public void delete(String id) throws SQLException {
+        String sql = "DELETE FROM driver WHERE id = ?";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, id);
+            stmt.executeUpdate();
+        }
+    }
 }
