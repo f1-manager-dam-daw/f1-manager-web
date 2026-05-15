@@ -37,34 +37,23 @@ function showError(message) {
     errorMsg.textContent = message;
 }
 
-document.getElementById("editConstructorForm").addEventListener("submit", async function(e) {
-    e.preventDefault();
-    const updatedConstructor = {
-        id: document.getElementById("editConstructorId").value,
-        name: document.getElementById("editConstructorName").value,
-        fullName: document.getElementById("editConstructorFullName").value,
-        nationality: document.getElementById("editConstructorNationality").value
-    };
+loadConstructor();
+
+document.getElementById("deleteBtn").addEventListener("click", async function () {
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get("id");
+
+    if (!confirm("Are you sure you want to delete this constructor? This action cannot be undone.")) return;
 
     try {
-        const response = await fetch(`${API_BASE_URL}/constructors`, {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(updatedConstructor)
+        const response = await fetch(`${API_BASE_URL}/constructors?id=${id}`, {
+            method: "DELETE"
         });
 
-        if (response.ok) {
-            const modal = bootstrap.Modal.getInstance(document.getElementById("editConstructorModal"));
-            modal.hide();
-            loadConstructor();
-            alert("Constructor updated successfully!");
-        } else {
-            const err = await response.json();
-            alert("Error updating constructor: " + err.error);
-        }
+        if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
+
+        window.location.href = "constructors.html";
     } catch (error) {
-        alert("Network error while updating constructor.");
+        showError("Could not delete constructor. Please try again later.");
     }
 });
-
-loadConstructor();

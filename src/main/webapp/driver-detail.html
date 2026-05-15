@@ -21,7 +21,10 @@
     </nav>
 
     <div class="container mt-4">
-        <a href="drivers.html" class="btn btn-outline-secondary btn-sm mb-4">← Back to Drivers</a>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <a href="drivers.html" class="btn btn-outline-secondary btn-sm">← Back to Drivers</a>
+            <button id="deleteBtn" class="btn btn-outline-danger btn-sm">Delete Driver</button>
+        </div>
 
         <div id="loadingMsg" class="text-center text-muted my-4">Loading driver...</div>
         <div id="errorMsg" class="alert alert-danger d-none"></div>

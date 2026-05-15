@@ -68,35 +68,47 @@ function renderPagination() {
     const totalPages = Math.ceil(filteredDrivers.length / PAGE_SIZE);
     if (totalPages <= 1) return;
 
-    const createPageItem = (text, page, disabled, active) => {
+    const ul = document.createElement("ul");
+    ul.className = "pagination";
+
+    const addPage = (label, page, disabled = false, active = false) => {
         const li = document.createElement("li");
         li.className = `page-item ${disabled ? "disabled" : ""} ${active ? "active" : ""}`;
-        li.innerHTML = `<a class="page-link" href="#">${text}</a>`;
-        if (!disabled && !active) {
+        li.innerHTML = `<a class="page-link" href="#">${label}</a>`;
+        if (!disabled) {
             li.addEventListener("click", (e) => {
                 e.preventDefault();
                 currentPage = page;
                 renderTable();
                 renderPagination();
             });
-        } else {
-            li.addEventListener("click", (e) => e.preventDefault());
         }
-        return li;
+        ul.appendChild(li);
     };
 
-    container.appendChild(createPageItem("Prev", currentPage - 1, currentPage === 1, false));
+    addPage("«", currentPage - 1, currentPage === 1);
 
-    let startPage = Math.max(1, currentPage - 2);
-    let endPage = Math.min(totalPages, currentPage + 2);
-    if (startPage === 1) endPage = Math.min(totalPages, 5);
-    if (endPage === totalPages) startPage = Math.max(1, totalPages - 4);
-
-    for (let i = startPage; i <= endPage; i++) {
-        container.appendChild(createPageItem(i, i, false, i === currentPage));
+    const delta = 2;
+    const range = [];
+    for (let i = Math.max(1, currentPage - delta); i <= Math.min(totalPages, currentPage + delta); i++) {
+        range.push(i);
     }
 
-    container.appendChild(createPageItem("Next", currentPage + 1, currentPage === totalPages, false));
+    if (range[0] > 1) {
+        addPage(1, 1);
+        if (range[0] > 2) addPage("...", null, true);
+    }
+
+    range.forEach(i => addPage(i, i, false, i === currentPage));
+
+    if (range[range.length - 1] < totalPages) {
+        if (range[range.length - 1] < totalPages - 1) addPage("...", null, true);
+        addPage(totalPages, totalPages);
+    }
+
+    addPage("»", currentPage + 1, currentPage === totalPages);
+
+    container.appendChild(ul);
 }
 
 document.getElementById("searchInput").addEventListener("input", function () {
@@ -111,47 +123,8 @@ document.getElementById("searchInput").addEventListener("input", function () {
     renderPagination();
 });
 
-document.getElementById("addDriverForm").addEventListener("submit", async function(e) {
-    e.preventDefault();
-    const newDriver = {
-        id: document.getElementById("driverId").value,
-        forename: document.getElementById("driverForename").value,
-        surname: document.getElementById("driverSurname").value,
-        code: document.getElementById("driverCode").value,
-        nationality: document.getElementById("driverNationality").value
-    };
-
-    try {
-        const response = await fetch(`${API_BASE_URL}/drivers`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(newDriver)
-        });
-
-        if (response.ok) {
-            // Close modal
-            const modal = bootstrap.Modal.getInstance(document.getElementById("addDriverModal"));
-            modal.hide();
-            // Reset form
-            this.reset();
-            // Reload data
-            loadDrivers();
-            alert("Driver added successfully!");
-        } else {
-            const err = await response.json();
-            alert("Error adding driver: " + err.error);
-        }
-    } catch (error) {
-        alert("Network error while adding driver.");
-    }
-});
-
 async function deleteDriver(id) {
-    if (!confirm(`Are you sure you want to delete driver ${id}?`)) {
-        return;
-    }
+    if (!confirm(`Are you sure you want to delete driver ${id}?`)) return;
 
     try {
         const response = await fetch(`${API_BASE_URL}/drivers?id=${id}`, {
@@ -160,7 +133,6 @@ async function deleteDriver(id) {
 
         if (response.ok) {
             loadDrivers();
-            alert("Driver deleted successfully!");
         } else {
             const err = await response.json();
             alert("Error deleting driver: " + err.error);
@@ -170,7 +142,6 @@ async function deleteDriver(id) {
     }
 }
 
-// Make deleteDriver globally accessible since it's used in inline onclick handlers (or we can attach it in renderTable)
 window.deleteDriver = deleteDriver;
 
 loadDrivers();

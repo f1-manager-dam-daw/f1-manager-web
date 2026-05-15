@@ -39,35 +39,23 @@ function showError(message) {
     errorMsg.textContent = message;
 }
 
-document.getElementById("editDriverForm").addEventListener("submit", async function(e) {
-    e.preventDefault();
-    const updatedDriver = {
-        id: document.getElementById("editDriverId").value,
-        forename: document.getElementById("editForename").value,
-        surname: document.getElementById("editSurname").value,
-        code: document.getElementById("editCode").value,
-        nationality: document.getElementById("editNationality").value
-    };
+loadDriver();
+
+document.getElementById("deleteBtn").addEventListener("click", async function () {
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get("id");
+
+    if (!confirm("Are you sure you want to delete this driver? This action cannot be undone.")) return;
 
     try {
-        const response = await fetch(`${API_BASE_URL}/drivers`, {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(updatedDriver)
+        const response = await fetch(`${API_BASE_URL}/drivers?id=${id}`, {
+            method: "DELETE"
         });
 
-        if (response.ok) {
-            const modal = bootstrap.Modal.getInstance(document.getElementById("editDriverModal"));
-            modal.hide();
-            loadDriver();
-            alert("Driver updated successfully!");
-        } else {
-            const err = await response.json();
-            alert("Error updating driver: " + err.error);
-        }
+        if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
+
+        window.location.href = "drivers.html";
     } catch (error) {
-        alert("Network error while updating driver.");
+        showError("Could not delete driver. Please try again later.");
     }
 });
-
-loadDriver();
