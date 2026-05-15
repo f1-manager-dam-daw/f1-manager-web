@@ -11,12 +11,13 @@ public class DatabaseConnection {
     private static final Properties properties = new Properties();
 
     static {
-        try (InputStream input = Thread.currentThread().getContextClassLoader().getResourceAsStream("application-local.properties")) {
+        String resourceName = "application-local.properties";
+        try (InputStream input = DatabaseConnection.class.getClassLoader().getResourceAsStream(resourceName)) {
             if (input != null) {
                 properties.load(input);
             }
         } catch (Exception ex) {
-            System.err.println("Could not load application-local.properties");
+            ex.printStackTrace();
         }
     }
 

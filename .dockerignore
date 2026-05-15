@@ -1,0 +1,7 @@
+target/
+apache-tomcat-*/
+.git/
+.idea/
+.vscode/
+*.log
+*.class
