@@ -32,3 +32,22 @@ function showError(message) {
 }
 
 loadConstructor();
+
+document.getElementById("deleteBtn").addEventListener("click", async function () {
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get("id");
+
+    if (!confirm("Are you sure you want to delete this constructor? This action cannot be undone.")) return;
+
+    try {
+        const response = await fetch(`${API_BASE_URL}/constructors/${id}`, {
+            method: "DELETE"
+        });
+
+        if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
+
+        window.location.href = "constructors.html";
+    } catch (error) {
+        showError("Could not delete constructor. Please try again later.");
+    }
+});

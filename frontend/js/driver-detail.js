@@ -33,3 +33,22 @@ function showError(message) {
 }
 
 loadDriver();
+
+document.getElementById("deleteBtn").addEventListener("click", async function () {
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get("id");
+
+    if (!confirm("Are you sure you want to delete this driver? This action cannot be undone.")) return;
+
+    try {
+        const response = await fetch(`${API_BASE_URL}/drivers/${id}`, {
+            method: "DELETE"
+        });
+
+        if (!response.ok) throw new Error(`HTTP Error: ${response.status}`);
+
+        window.location.href = "drivers.html";
+    } catch (error) {
+        showError("Could not delete driver. Please try again later.");
+    }
+});
