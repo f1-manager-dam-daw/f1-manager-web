@@ -11,13 +11,7 @@ Proyecto Java para gestionar datos de Fórmula 1 con una base de datos relaciona
 
 ## Datos
 
-Se usará F1DB como dataset inicial.
-
-El ZIP SQL está en:
-
-```text
-database/vendor/f1db/f1db-sql-mysql-single-inserts.zip
-```
+Se usará F1DB como dataset inicial, el cual ya se encuentra importado en AWS RDS.
 
 Vistas auxiliares del proyecto:
 
