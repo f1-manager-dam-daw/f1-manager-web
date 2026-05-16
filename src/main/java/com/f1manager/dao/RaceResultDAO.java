@@ -21,7 +21,11 @@ public class RaceResultDAO {
                 results.add(new RaceResult(
                     rs.getInt("race_id"),
                     rs.getString("driver_id"),
+                    rs.getString("driver_name"),
+                    rs.getString("driver_code"),
                     rs.getString("constructor_id"),
+                    rs.getString("constructor_name"),
+                    rs.getString("constructor_full_name"),
                     rs.getInt("grid"),
                     rs.getInt("position"),
                     rs.getString("position_text"),

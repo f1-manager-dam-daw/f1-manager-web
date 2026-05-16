@@ -61,6 +61,41 @@ public class PilotoDAO {
         return null;
     }
 
+    public List<Piloto> findByConstructorId(String constructorId) throws SQLException {
+        List<Piloto> pilotos = new ArrayList<>();
+        String sql = "SELECT DISTINCT d.id, d.first_name AS forename, d.last_name AS surname, " +
+                "d.abbreviation AS code, d.permanent_number AS number, nc.demonym AS nationality, " +
+                "d.date_of_birth, d.total_points, d.total_race_wins, d.total_podiums " +
+                "FROM race_result rr " +
+                "JOIN driver d ON d.id = rr.driver_id " +
+                "LEFT JOIN country nc ON nc.id = d.nationality_country_id " +
+                "WHERE rr.constructor_id = ? " +
+                "ORDER BY d.last_name, d.first_name";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, constructorId);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                pilotos.add(new Piloto(
+                        rs.getString("id"),
+                        rs.getString("forename"),
+                        rs.getString("surname"),
+                        rs.getString("code"),
+                        rs.getInt("number"),
+                        rs.getString("nationality"),
+                        rs.getString("date_of_birth"),
+                        rs.getDouble("total_points"),
+                        rs.getInt("total_race_wins"),
+                        rs.getInt("total_podiums")
+                ));
+            }
+        }
+        return pilotos;
+    }
+
     public void save(Piloto piloto) throws SQLException {
         String sql = "INSERT INTO driver (id, name, first_name, last_name, full_name, abbreviation, permanent_number, gender, date_of_birth, place_of_birth, country_of_birth_country_id, nationality_country_id, total_championship_wins, total_race_entries, total_race_starts, total_race_wins, total_race_laps, total_podiums, total_points, total_championship_points, total_pole_positions, total_fastest_laps, total_sprint_race_starts, total_sprint_race_wins, total_driver_of_the_day, total_grand_slams) " +
                      "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";

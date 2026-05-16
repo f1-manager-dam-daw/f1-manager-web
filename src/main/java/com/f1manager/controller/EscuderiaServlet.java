@@ -27,10 +27,14 @@ public class EscuderiaServlet extends HttpServlet {
         resp.setCharacterEncoding("UTF-8");
 
         String id = req.getParameter("id");
+        String driverId = req.getParameter("driverId");
         PrintWriter out = resp.getWriter();
 
         try {
-            if (id != null && !id.isEmpty()) {
+            if (driverId != null && !driverId.isEmpty()) {
+                List<Escuderia> escuderias = escuderiaDAO.findByDriverId(driverId);
+                out.print(gson.toJson(escuderias));
+            } else if (id != null && !id.isEmpty()) {
                 Escuderia e = escuderiaDAO.findById(id);
                 if (e != null) {
                     out.print(gson.toJson(e));

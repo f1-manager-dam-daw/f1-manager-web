@@ -27,10 +27,14 @@ public class PilotoServlet extends HttpServlet {
         resp.setCharacterEncoding("UTF-8");
 
         String id = req.getParameter("id");
+        String constructorId = req.getParameter("constructorId");
         PrintWriter out = resp.getWriter();
 
         try {
-            if (id != null && !id.isEmpty()) {
+            if (constructorId != null && !constructorId.isEmpty()) {
+                List<Piloto> pilotos = pilotoDAO.findByConstructorId(constructorId);
+                out.print(gson.toJson(pilotos));
+            } else if (id != null && !id.isEmpty()) {
                 Piloto p = pilotoDAO.findById(id);
                 if (p != null) {
                     out.print(gson.toJson(p));
