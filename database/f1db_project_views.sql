@@ -51,11 +51,17 @@ CREATE OR REPLACE VIEW app_results AS
 SELECT
   rr.race_id,
   rr.driver_id,
+  d.full_name AS driver_name,
+  d.abbreviation AS driver_code,
   rr.constructor_id,
+  c.name AS constructor_name,
+  c.full_name AS constructor_full_name,
   rr.grid_position_number AS grid,
   rr.position_number AS position,
   rr.position_text,
   rr.points,
   rr.laps,
   rr.reason_retired AS status
-FROM race_result rr;
+FROM race_result rr
+LEFT JOIN driver d ON d.id = rr.driver_id
+LEFT JOIN constructor c ON c.id = rr.constructor_id;

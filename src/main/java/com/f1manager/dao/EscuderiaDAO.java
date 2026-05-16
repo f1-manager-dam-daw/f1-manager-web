@@ -57,6 +57,38 @@ public class EscuderiaDAO {
         return null;
     }
 
+    public List<Escuderia> findByDriverId(String driverId) throws SQLException {
+        List<Escuderia> escuderias = new ArrayList<>();
+        String sql = "SELECT DISTINCT c.id, c.name, c.full_name, co.demonym AS nationality, " +
+                "c.total_points, c.total_race_wins, c.total_podiums, c.total_championship_wins " +
+                "FROM race_result rr " +
+                "JOIN constructor c ON c.id = rr.constructor_id " +
+                "LEFT JOIN country co ON co.id = c.country_id " +
+                "WHERE rr.driver_id = ? " +
+                "ORDER BY c.name";
+
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, driverId);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                escuderias.add(new Escuderia(
+                        rs.getString("id"),
+                        rs.getString("name"),
+                        rs.getString("full_name"),
+                        rs.getString("nationality"),
+                        rs.getDouble("total_points"),
+                        rs.getInt("total_race_wins"),
+                        rs.getInt("total_podiums"),
+                        rs.getInt("total_championship_wins")
+                ));
+            }
+        }
+        return escuderias;
+    }
+
     public void save(Escuderia escuderia) throws SQLException {
         String sql = "INSERT INTO constructor (id, name, full_name, country_id, " +
                 "total_championship_wins, total_race_entries, total_race_starts, total_race_wins, " +

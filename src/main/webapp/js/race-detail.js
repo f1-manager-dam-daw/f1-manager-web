@@ -42,10 +42,15 @@ async function loadResults(raceId) {
 
         results.forEach(result => {
             const row = document.createElement("tr");
+            const driverLabel = result.driverCode
+                ? `${result.driverName || result.driverId || "—"} (${result.driverCode})`
+                : (result.driverName || result.driverId || "—");
+            const constructorLabel = result.constructorName || result.constructorFullName || result.constructorId || "—";
+
             row.innerHTML = `
                 <td>${result.positionText || result.position || "—"}</td>
-                <td>${result.driverId || "—"}</td>
-                <td>${result.constructorId || "—"}</td>
+                <td><a href="driver-detail.html?id=${encodeURIComponent(result.driverId)}">${driverLabel}</a></td>
+                <td><a href="constructor-detail.html?id=${encodeURIComponent(result.constructorId)}">${constructorLabel}</a></td>
                 <td>${result.grid ?? "—"}</td>
                 <td>${result.laps ?? "—"}</td>
                 <td>${result.points ?? "—"}</td>
