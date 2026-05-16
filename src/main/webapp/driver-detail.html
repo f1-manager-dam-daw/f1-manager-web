@@ -32,7 +32,12 @@
         <div id="driverDetail" class="d-none">
             <div class="card shadow-sm mb-4">
                 <div class="card-body">
-                    <h2 id="driverName" class="fw-bold"></h2>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h2 id="driverName" class="fw-bold"></h2>
+                        <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editDriverModal">
+                            Edit Driver
+                        </button>
+                    </div>
                     <div class="row mt-3">
                         <div class="col-md-3">
                             <p class="text-muted mb-1">Code</p>
@@ -68,6 +73,40 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <!-- Edit Driver Modal -->
+    <div class="modal fade" id="editDriverModal" tabindex="-1" aria-labelledby="editDriverModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="editDriverModalLabel">Edit Driver</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form id="editDriverForm">
+              <input type="hidden" id="editDriverId">
+              <div class="mb-3">
+                <label for="editForename" class="form-label">Forename</label>
+                <input type="text" class="form-control" id="editForename" required>
+              </div>
+              <div class="mb-3">
+                <label for="editSurname" class="form-label">Surname</label>
+                <input type="text" class="form-control" id="editSurname" required>
+              </div>
+              <div class="mb-3">
+                <label for="editCode" class="form-label">Code</label>
+                <input type="text" class="form-control" id="editCode" maxlength="3">
+              </div>
+              <div class="mb-3">
+                <label for="editNationality" class="form-label">Nationality</label>
+                <input type="text" class="form-control" id="editNationality">
+              </div>
+              <button type="submit" class="btn btn-warning w-100">Update Driver</button>
+            </form>
+          </div>
+        </div>
+      </div>
     </div>
 
     <script src="js/api.js"></script>

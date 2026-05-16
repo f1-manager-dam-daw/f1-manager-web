@@ -1,0 +1,11 @@
+services:
+  f1-manager:
+    build: .
+    container_name: f1-manager-app
+    ports:
+      - "8080:8080"
+    environment:
+      - F1_DB_URL=jdbc:mysql://f1-manager-db.czam0qussyez.us-east-1.rds.amazonaws.com:3306/f1_manager
+      - F1_DB_USER=f1_admin
+      - F1_DB_PASSWORD=F1m4wMVUtzN1P5xUdglFEDRp
+    restart: unless-stopped

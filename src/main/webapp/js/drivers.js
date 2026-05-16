@@ -6,7 +6,21 @@ let filteredDrivers = [];
 async function loadDrivers() {
     try {
         allDrivers = await apiGet("/drivers");
-        filteredDrivers = allDrivers;
+        
+        const query = document.getElementById("searchInput").value.toLowerCase();
+        if (query) {
+            filteredDrivers = allDrivers.filter(d =>
+                (d.forename + " " + d.surname).toLowerCase().includes(query) ||
+                (d.code || "").toLowerCase().includes(query) ||
+                (d.nationality || "").toLowerCase().includes(query)
+            );
+        } else {
+            filteredDrivers = allDrivers;
+        }
+        
+        const totalPages = Math.ceil(filteredDrivers.length / PAGE_SIZE);
+        if (currentPage > totalPages) currentPage = totalPages || 1;
+
         document.getElementById("loadingMsg").classList.add("d-none");
         document.getElementById("driversTableContainer").classList.remove("d-none");
         renderTable();
@@ -37,18 +51,12 @@ function renderTable() {
             <td>${driver.forename} ${driver.surname}</td>
             <td>${driver.nationality || "—"}</td>
             <td>${driver.number || "—"}</td>
-<<<<<<< HEAD
             <td>${driver.totalRaceWins ?? "—"}</td>
             <td>${driver.totalPoints ?? "—"}</td>
-            <td><a href="driver-detail.html?id=${driver.id}" class="btn btn-sm btn-danger">View</a></td>
-=======
-            <td>${driver.total_race_wins ?? "—"}</td>
-            <td>${driver.total_points ?? "—"}</td>
             <td>
                 <a href="driver-detail.html?id=${driver.id}" class="btn btn-sm btn-danger">View</a>
                 <button class="btn btn-sm btn-outline-danger" onclick="deleteDriver('${driver.id}')">Delete</button>
             </td>
->>>>>>> origin/develop
         `;
         tbody.appendChild(row);
     });
@@ -60,18 +68,47 @@ function renderPagination() {
     const totalPages = Math.ceil(filteredDrivers.length / PAGE_SIZE);
     if (totalPages <= 1) return;
 
-    for (let i = 1; i <= totalPages; i++) {
+    const ul = document.createElement("ul");
+    ul.className = "pagination";
+
+    const addPage = (label, page, disabled = false, active = false) => {
         const li = document.createElement("li");
-        li.className = `page-item ${i === currentPage ? "active" : ""}`;
-        li.innerHTML = `<a class="page-link" href="#">${i}</a>`;
-        li.addEventListener("click", (e) => {
-            e.preventDefault();
-            currentPage = i;
-            renderTable();
-            renderPagination();
-        });
-        container.appendChild(li);
+        li.className = `page-item ${disabled ? "disabled" : ""} ${active ? "active" : ""}`;
+        li.innerHTML = `<a class="page-link" href="#">${label}</a>`;
+        if (!disabled) {
+            li.addEventListener("click", (e) => {
+                e.preventDefault();
+                currentPage = page;
+                renderTable();
+                renderPagination();
+            });
+        }
+        ul.appendChild(li);
+    };
+
+    addPage("«", currentPage - 1, currentPage === 1);
+
+    const delta = 2;
+    const range = [];
+    for (let i = Math.max(1, currentPage - delta); i <= Math.min(totalPages, currentPage + delta); i++) {
+        range.push(i);
     }
+
+    if (range[0] > 1) {
+        addPage(1, 1);
+        if (range[0] > 2) addPage("...", null, true);
+    }
+
+    range.forEach(i => addPage(i, i, false, i === currentPage));
+
+    if (range[range.length - 1] < totalPages) {
+        if (range[range.length - 1] < totalPages - 1) addPage("...", null, true);
+        addPage(totalPages, totalPages);
+    }
+
+    addPage("»", currentPage + 1, currentPage === totalPages);
+
+    container.appendChild(ul);
 }
 
 document.getElementById("searchInput").addEventListener("input", function () {
@@ -86,47 +123,8 @@ document.getElementById("searchInput").addEventListener("input", function () {
     renderPagination();
 });
 
-document.getElementById("addDriverForm").addEventListener("submit", async function(e) {
-    e.preventDefault();
-    const newDriver = {
-        id: document.getElementById("driverId").value,
-        forename: document.getElementById("driverForename").value,
-        surname: document.getElementById("driverSurname").value,
-        code: document.getElementById("driverCode").value,
-        nationality: document.getElementById("driverNationality").value
-    };
-
-    try {
-        const response = await fetch(`${API_BASE_URL}/drivers`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(newDriver)
-        });
-
-        if (response.ok) {
-            // Close modal
-            const modal = bootstrap.Modal.getInstance(document.getElementById("addDriverModal"));
-            modal.hide();
-            // Reset form
-            this.reset();
-            // Reload data
-            loadDrivers();
-            alert("Driver added successfully!");
-        } else {
-            const err = await response.json();
-            alert("Error adding driver: " + err.error);
-        }
-    } catch (error) {
-        alert("Network error while adding driver.");
-    }
-});
-
 async function deleteDriver(id) {
-    if (!confirm(`Are you sure you want to delete driver ${id}?`)) {
-        return;
-    }
+    if (!confirm(`Are you sure you want to delete driver ${id}?`)) return;
 
     try {
         const response = await fetch(`${API_BASE_URL}/drivers?id=${id}`, {
@@ -135,7 +133,6 @@ async function deleteDriver(id) {
 
         if (response.ok) {
             loadDrivers();
-            alert("Driver deleted successfully!");
         } else {
             const err = await response.json();
             alert("Error deleting driver: " + err.error);
@@ -145,7 +142,6 @@ async function deleteDriver(id) {
     }
 }
 
-// Make deleteDriver globally accessible since it's used in inline onclick handlers (or we can attach it in renderTable)
 window.deleteDriver = deleteDriver;
 
 loadDrivers();

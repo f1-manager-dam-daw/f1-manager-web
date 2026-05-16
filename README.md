@@ -42,6 +42,32 @@ db.password=TU_PASSWORD_AQUI
 > **Nota:** Este archivo está ignorado en `.gitignore` para no subir contraseñas a GitHub.
 Alternativamente, se pueden utilizar las variables de entorno `F1_DB_URL`, `F1_DB_USER` y `F1_DB_PASSWORD`.
 
-## Ejecución
+## Requisitos del Entorno
 
-Pendiente de completar cuando esté finalizado el setup del servidor web.
+- Docker y Docker Compose
+- Maven (Opcional, para lanzar pruebas locales)
+- Java 17 (Opcional, para lanzar pruebas locales)
+
+## Ejecución (Despliegue)
+
+El proyecto está dockerizado para un despliegue rápido y sencillo.
+
+1. Asegúrate de tener las variables de entorno configuradas (ej. en tu `.bashrc` o inyectadas).
+   - `F1_DB_URL`
+   - `F1_DB_USER`
+   - `F1_DB_PASSWORD`
+2. En la raíz del proyecto, ejecuta:
+   ```bash
+   docker compose up -d --build
+   ```
+3. La aplicación backend y frontend estará disponible en `http://localhost:8080/`.
+
+## Tests Unitarios y Funcionales
+
+Para verificar las operaciones DAO contra la base de datos:
+
+```bash
+mvn test
+```
+
+> **Nota:** Las pruebas de Integración y Funcionales están documentadas paso a paso en `docs/tests/FunctionalTests.md` para facilitar la verificación de la rúbrica.
